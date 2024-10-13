@@ -46,10 +46,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
                 for (int row = 0; row <= 9000; row++)
                 {
                     IRow currentRow = sheet.GetRow(row);
-
                     if (currentRow.GetCell(0) == null || currentRow.GetCell(1) == null) continue;
-                    
-
                  
                     article = currentRow.GetCell(0).CellType == CellType.Numeric ? 
                         currentRow.GetCell(0).NumericCellValue.ToString() : currentRow.GetCell(0).StringCellValue;
@@ -59,7 +56,6 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
 
                     for (int i = 0; i < refers.Length; i++)
                     {
-                        //using (HttpClient httpClient = new HttpClient())
                         using (WebClient webClient = new WebClient())
                         {
                             string localFileName = refers[i].Replace("https://static.insales-cdn.com/images/", "");
@@ -73,24 +69,15 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
                                 textBox2.Text = row.ToString();
                             }
                             else
-                            {
-                                                                
-                                try {
-                                //HttpResponseMessage response = await httpClient.GetAsync(refers[i]);
-                                //response.EnsureSuccessStatusCode();
-                                //byte[] imageBytes = await response.Content.ReadAsByteArrayAsync();
-
-                                ////if (fileName.Length>235) fileName = fileName.Substring(0, 235);
-
-                                //File.WriteAllBytes(fileName, imageBytes);
-
-                                webClient.DownloadFile(refers[i], fileName);
-
-
-                                textBox1.Text = $"{fileName}";
-                                textBox2.Text = row.ToString() + " cool";
-
-                                } catch (Exception ex) {
+                            {                               
+                                try
+                                {
+                                    webClient.DownloadFile(refers[i], fileName);
+                                    textBox1.Text = $"{fileName}";
+                                    textBox2.Text = row.ToString() + " cool";
+                                }
+                                catch (Exception ex) 
+                                {
                                     Debug.WriteLine("bad! - " + row.ToString() + " --- " + article);
                                     Debug.WriteLine(ex.Message);
                                 }
@@ -107,10 +94,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
 
         private void button2_Click(object sender, EventArgs e) // обработка изображений (новое фото будет X_product)
         {
-            
-            
-
-            // Получаем список файлов из указанной папки
+            // Получаем список файлов из указанной папки imagesFolder
             string[] imageFiles = System.IO.Directory.GetFiles(imagesFolder, "*.*");
 
             // Цикл для обработки каждого изображения
@@ -128,13 +112,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
                 textBox1.Text = originalFilePath;
                 textBox2.Text = q.ToString();
 
-                //if (imagePath.IndexOf("73756_bresser-walkie-talkie-set-fm-national-geographic_11") > 0)
-                //    continue;
-                if (Path.GetExtension(imagePath) == ".webp")
-                    continue;
-
-                //Application.DoEvents();
-                //string imagePath_ = @"d:\Temp\images\73756---products_1_2911_725568351_73756_bresser-walkie-talkie-set-fm-national-geographic_11.jpg";
+                if (Path.GetExtension(imagePath) == ".webp") continue;
 
                 GC.Collect();
 
@@ -153,8 +131,6 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
                         width = height / originalImage.Width * originalImage.Width;
                     }
 
-
-
                     if (originalImage.Width <= 700 && originalImage.Height <= 900)
                     {
                         width = 700;
@@ -164,14 +140,9 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
                     if (width < 700) width = 700;
                     if (height < 900) height = 900;
 
-                    /*
-                    Debug.WriteLine(width +" __ " + height);
-                    Debug.WriteLine(" > " + originalImage.Width + " __ " + originalImage.Height);
-                    */
-
+                    
                     if (originalImage.Width < 700 || originalImage.Height < 900)
                     {
-
                         using (Bitmap newImage = new Bitmap(width, height))
                         {
                             using (Graphics g = Graphics.FromImage(newImage))
@@ -199,29 +170,19 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
 
                     if (FLAG) File.Delete(originalFilePath);
 
-                    //GC.Collect();
                     Application.DoEvents();
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine(ex.Message);
-                    continue;
-
+                    Debug.WriteLine(ex.Message); continue;
                 }
-
-
-
-            }
+            } // END for
         }
 
         private void button3_Click(object sender, EventArgs e) // формирование rrr.csv
         {
             File.Delete("rrr.csv");
 
-            // Путь к папке с изображениями
-            
-
-            // Получаем список файлов из указанной папки
             string[] imageFiles = System.IO.Directory.GetFiles(imagesFolder, "*.*");
 
             var q = 0;
@@ -235,14 +196,12 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
                 if (article != "") 
                 { 
                     for (var c = i; c < imageFiles.Length; c++)
-                    {
                         if (article == imageFiles[c].Split("---")[0])
                         {
                             pathFileName += "https://kostyak.site/images/" + imageFiles[c] + " ";
                             imageFiles[c] = "---";
                         }
-                    }
-
+                        
                     string row = ("\"" + article + "\"" + ";" + "\"" + pathFileName + "\"" + "\r\n").Replace(imagesFolder,"");
                     File.AppendAllText("rrr.csv", row);
                     q++;
@@ -251,7 +210,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____2
                 textBox2.Text = q.ToString();
                 Application.DoEvents();
 
-            }
+            } // END for
         }
     }
 }

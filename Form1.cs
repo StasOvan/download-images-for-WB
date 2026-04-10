@@ -186,7 +186,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
                     continue;
 
                 }
-            } // end for ImageFiles
+            } // end for imageFiles
         }
 
         private void button3_Click(object sender, EventArgs e) // формирование rrr.csv
@@ -223,7 +223,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
                 textBox2.Text = (q + 1).ToString();
                 Application.DoEvents();
 
-            } // end for ImageFiles
+            } // end for imageFiles
         }
     }
 }

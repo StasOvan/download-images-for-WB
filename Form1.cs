@@ -7,9 +7,9 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
 {
     public partial class Form1 : Form
     {
-        // при формировании rrr.csv преобразовать в 1251 для Excel
+        // после формирования rrr.csv преобразовать в 1251 (Windows) для Excel
 
-        const string FOLDER_IMAGES = "D:\\Temp\\images\\"; // В Temp должна быть папка images
+        const string FOLDER_FOR_DOWNLOAD_IMAGES = "D:\\Temp\\images\\"; // В Temp должна быть папка images
         const string FILE_EXCEL = "артикулы+фото.xlsx"; // Путь к файлу Excel
 
 
@@ -58,7 +58,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
                 {
                     temp = refer.Replace("https://static.insales-cdn.com/images/", "");
                     temp = temp.Replace("\\", "_").Replace("/", "_").Replace("*", "_").Replace("?", "_").Replace("!", "_");
-                    fileName = FOLDER_IMAGES + article + "---" + temp;
+                    fileName = FOLDER_FOR_DOWNLOAD_IMAGES + article + "---" + temp;
                     if (article == "Артикул" || article == "") continue;
 
                     if (Path.GetExtension(fileName) == ".dll") fileName += ".jpg";
@@ -102,7 +102,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
         private void button2_Click(object sender, EventArgs e) // обработка изображений (новое фото будет X_product)
         {
             // Получаем список файлов из указанной папки
-            string[] imageFiles = System.IO.Directory.GetFiles(FOLDER_IMAGES, "*.*");
+            string[] imageFiles = System.IO.Directory.GetFiles(FOLDER_FOR_DOWNLOAD_IMAGES, "*.*");
 
             // Цикл для обработки каждого изображения
             int width = 700;
@@ -195,7 +195,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
             File.Delete("rrr.csv");
 
             // Получаем список файлов из указанной папки
-            string[] imageFiles = System.IO.Directory.GetFiles(FOLDER_IMAGES, "*.*");
+            string[] imageFiles = System.IO.Directory.GetFiles(FOLDER_FOR_DOWNLOAD_IMAGES, "*.*");
 
             var q = 0;
 
@@ -216,7 +216,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
                         }
                     }
 
-                    string row = ("\"" + article.Replace("%23", "#") + "\"" + ";" + "\"" + pathFileName + "\"" + "\r\n").Replace(FOLDER_IMAGES, "");
+                    string row = ("\"" + article.Replace("%23", "#") + "\"" + ";" + "\"" + pathFileName + "\"" + "\r\n").Replace(FOLDER_FOR_DOWNLOAD_IMAGES, "");
                     File.AppendAllText("rrr.csv", row);
                     q++;
                 }

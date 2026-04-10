@@ -18,7 +18,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
             InitializeComponent();
         }
 
-        private async void button1_Click(object sender, EventArgs e) // скачивание файлов в  D:\temp\images
+        private async void button1_Click(object sender, EventArgs e) // скачивание файлов в  FOLDER_FOR_DOWNLOAD_IMAGES
         {
             List<string> articles = [];
             List<string> imagesUrl = [];
@@ -93,8 +93,8 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
 
                     Application.DoEvents();
 
-                } // for refers
-            } // for articles
+                } // end for refers
+            } // end for articles
         }
 
 
@@ -119,8 +119,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
                 textBox1.Text = originalFilePath;
                 textBox2.Text = (q + 1).ToString();
 
-                if (Path.GetExtension(imagePath) == ".webp")
-                    continue;
+                if (Path.GetExtension(imagePath) == ".webp") continue;
 
                 GC.Collect();
 
@@ -187,7 +186,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
                     continue;
 
                 }
-            } // for ImageFiles
+            } // end for ImageFiles
         }
 
         private void button3_Click(object sender, EventArgs e) // формирование rrr.csv
@@ -224,7 +223,7 @@ namespace Выкачиваем_картинки_для_WB__700х900____3
                 textBox2.Text = (q + 1).ToString();
                 Application.DoEvents();
 
-            } // for ImageFiles
+            } // end for ImageFiles
         }
     }
 }
